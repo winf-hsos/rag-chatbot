@@ -1,0 +1,12 @@
+{
+    "files": [
+        {
+            "name": "test.txt",
+            "type": "text"
+        },
+        {
+            "name": "sessions.txt",
+            "type": "text"
+        }
+    ]
+}

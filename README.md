@@ -23,7 +23,15 @@ pip install -r requirements.txt
 The whole chatbot framework is configured using a single config file: `config/config.yaml`. Within the framework, this config file is loaded by accessing the environment variable `CHATBOT_CONFIG_FILE`. Make sure you set this environment variable to the correct path:
 
 ```
-SET CHATBOT_CONFIG_FILE=C:/code/rag-chatbot/chatbot/config_template.yaml
+SET CHATBOT_CONFIG_FILE=C:/code/rag-chatbot/chatbot/config.yaml
+```
+
+# Run the streamlit app
+
+Goto `frontend/` directory and run:
+
+```
+streamlit run Home.py
 ```
 
 # Links

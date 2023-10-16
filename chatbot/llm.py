@@ -4,15 +4,17 @@ class LargeLanguageModel:
         self.model_name = model_name
 
     def complete(self, messages):
-        prompt = self.generate_prompt()
+        from . import OPENAI_API_KEY
+        import openai
+        openai.api_key = OPENAI_API_KEY
 
-        # Send prompt to openai
-        # ...
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=messages
+        )
 
-        pass
+        return response
 
-    def generate_prompt(self, context, question):
-        return "Not implemented yet"
     
 
 

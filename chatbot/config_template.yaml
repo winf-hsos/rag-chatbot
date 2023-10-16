@@ -1,1 +1,7 @@
 openai_api_key: "<replace_with_your_key>"
+knowledge_base_root: "C:\\code\\rag-chatbot\\chatbot\\knowledge"
+knowledge_base_auto_sync: True
+
+text_doc:
+  chunk_size: 500
+  chunk_overlap: 0
