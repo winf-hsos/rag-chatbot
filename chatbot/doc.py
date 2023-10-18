@@ -1,5 +1,6 @@
 import uuid
-from unstructured.partition.auto import partition
+from unstructured.partition.text import partition_text
+from unstructured.partition.pdf import partition_pdf
 from langchain.docstore.document import Document
 from langchain.text_splitter import CharacterTextSplitter
 from . import EmbeddingModel
@@ -17,8 +18,8 @@ class KnowledgeBaseDocument:
         self.chunk_embeddings = []
           
     def save(self):
-        with open(self.processed_file_name, 'w') as file:
-            json.dump(self.to_json(), file, indent=4)
+        with open(self.processed_file_name, 'w', encoding="utf-8") as file:
+            json.dump(self.to_json(), file, indent=4, ensure_ascii=False)
     
     def load(self):
         pass
@@ -66,10 +67,12 @@ class KnowledgeBaseDocument:
     def create_document(document_json_data, raw_file_name, processed_file_name, embedding_model):
         
         doc = None
-        if document_json_data["type"] == "text":
+        if document_json_data["type"] == "text/plain":
             doc = TextKnowledgeBaseDocument(raw_file_name, processed_file_name)
+        elif document_json_data["type"] == "application/pdf":
+            doc = PDFKnowledgeBaseDocument(raw_file_name, processed_file_name)
         else:
-            print(f"ERROR: Unknown document type: {document_json_data['type']}")
+            print(f"ERROR: Unknown document type: {document_json_data['type']}. Ignoring document.")
             return None
         
         raw_file_name_stats = os.stat(raw_file_name)
@@ -107,14 +110,14 @@ class KnowledgeBaseDocument:
 
 class TextKnowledgeBaseDocument(KnowledgeBaseDocument):
 
-    def __init__(self, raw_file_name, processed_file_name, type = "text") -> None:
+    def __init__(self, raw_file_name, processed_file_name) -> None:
         super().__init__(raw_file_name, processed_file_name)
-        self.type = "text"
+        self.type = "text/plain"
         
     def load(self):
         # Read the raw file and create elements
-        self.text_elements = partition(filename=self.raw_file_name)
-      
+        self.text_elements = partition_text(filename=self.raw_file_name)
+        
         # Join all elements into one large text
         for text_element in self.text_elements:
             #if isinstance(el, NarrativeText) or isinstance(el, Title) or isinstance(el, Text): #and sentence_count(el.text) > 0:
@@ -123,6 +126,25 @@ class TextKnowledgeBaseDocument(KnowledgeBaseDocument):
         self.text = '\n'.join(self.filtered_text_elements)
         return self.text
     
+class PDFKnowledgeBaseDocument(KnowledgeBaseDocument):
+
+    def __init__(self, raw_file_name, processed_file_name) -> None:
+        super().__init__(raw_file_name, processed_file_name)
+        self.type = "application/pdf"
+
+
+    def load(self):
+        # Read the raw file and create elements
+        self.text_elements = partition_pdf(filename=self.raw_file_name, strategy="auto")
+        
+        # Join all elements into one large text
+        for text_element in self.text_elements:
+            #if isinstance(el, NarrativeText) or isinstance(el, Title) or isinstance(el, Text): #and sentence_count(el.text) > 0:
+            self.filtered_text_elements.append(f"{text_element}\n")
+
+        self.text = '\n'.join(self.filtered_text_elements)
+        return self.text
+  
     
 
 

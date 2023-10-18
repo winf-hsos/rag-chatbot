@@ -2,3 +2,4 @@ Alle Sessions finden im Raum HD 0010 statt.
 Session 1: Bayes'sche Optimierung von P. Zmijewksi von 12-13 Uhr
 Session 2: Lean Management bei Dr. Oetker von F. Balsliemke von 13-14 Uhr
 Session 3: RAG Chatbots für die Ernährungsindustrie von N. Meseth von 14-15 Uhr
+Session 4: Stable Diffusion XL in der Praxis von Erik Hömmen von 15-16 Uhr

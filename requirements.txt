@@ -2,5 +2,8 @@ openai
 chromadb
 langchain
 unstructured
+unstructured[docx,pptx,pdf]
 pyyaml
+python-magic-bin
+python-magic
 streamlit

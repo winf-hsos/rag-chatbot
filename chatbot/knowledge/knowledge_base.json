@@ -2,11 +2,21 @@
     "files": [
         {
             "name": "test.txt",
-            "type": "text"
+            "type": "text/plain"
         },
         {
             "name": "sessions.txt",
-            "type": "text"
+            "type": "text/plain"
+        },
+        {
+            "name": "abc.txt",
+            "path": "C:\\code\\rag-chatbot\\chatbot\\knowledge\\raw_documents\\abc.txt",
+            "type": "text/plain"
+        },
+        {
+            "name": "Vorlesungsskript.pdf",
+            "path": "C:\\code\\rag-chatbot\\chatbot\\knowledge\\raw_documents\\Vorlesungsskript.pdf",
+            "type": "application/pdf"
         }
     ]
 }

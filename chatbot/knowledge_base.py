@@ -46,7 +46,8 @@ class KnowledgeBase:
                processed_file_name = os.path.join(self.root, KnowledgeBase.PROCESSED_DIR, f'{file_json_data["name"]}.json')
 
                new_doc = KnowledgeBaseDocument.create_document(file_json_data, raw_file_name, processed_file_name, self.embedding_model)
-               self.docs.append(new_doc)
+               if new_doc != None:
+                    self.docs.append(new_doc) 
 
           print(f"DEBUG: Knowledge base setup complete. Found {len(self.docs)} documents.")
 
@@ -68,12 +69,16 @@ class KnowledgeBase:
                          print(f"DEBUG: The file {relative_path} is already in the index.")
                     else:
                          print(f"DEBUG: The file {relative_path} is not yet in the index.")
-                         self._add_file_to_index(relative_path)
+                         self._add_file_to_index(relative_path, full_path)
      
-     def _add_file_to_index(self, relative_path):
+     def _add_file_to_index(self, relative_path, full_path):
+          import magic 
+          mime_type = magic.from_file(full_path, mime=True)
+          print(mime_type)
           self.db_index["files"].append({
                "name": relative_path,
-               "type": "text"
+               "path": full_path,
+               "type": mime_type
           })	
 
      def _auto_delete_removed_files(self):

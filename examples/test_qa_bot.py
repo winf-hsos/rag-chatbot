@@ -1,5 +1,6 @@
 import sys
 import os
+os.environ["CHATBOT_CONFIG"] = "C:/code/rag-chatbot/chatbot/config.yaml"
 parent_directory = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(parent_directory)
 
@@ -15,7 +16,7 @@ while question != "exit":
     
     answer = qa_bot.ask(question)
     print(f"{qa_bot.name}: {answer.get_text()}")
-    print(answer.to_json())
+    #print(answer.to_json())
 
     # Next question
     question = input("User: ")
